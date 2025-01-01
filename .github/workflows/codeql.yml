@@ -223,3 +223,106 @@ jobs:
         to: ${{ secrets.TELEGRAM_CHAT_ID }}
         token: ${{ secrets.TELEGRAM_BOT_TOKEN }}
         message: "CodeQL 分析完成。"
+        from telegram import InlineKeyboardButton, InlineKeyboardMarkup, Update
+from telegram.ext import Updater, CommandHandler, CallbackQueryHandler
+
+def start(update: Update, context):
+    keyboard = [
+        [InlineKeyboardButton("Option 1", callback_data='1')],
+        [InlineKeyboardButton("Option 2", callback_data='2')],
+    ]
+    reply_markup = InlineKeyboardMarkup(keyboard)
+    update.message.reply_text('Please choose:', reply_markup=reply_markup)
+
+def button(update: Update, context):
+    query = update.callback_query
+    query.answer()
+    query.edit_message_text(text=f"Selected option: {query.data}")
+
+def main():
+    updater = Updater("YOUR_TELEGRAM_BOT_TOKEN", use_context=True)
+    dp = updater.dispatcher
+    dp.add_handler(CommandHandler("start", start))
+    dp.add_handler(CallbackQueryHandler(button))
+    updater.start_polling()
+    updater.idle()
+
+if __name__ == '__main__':
+    main()
+    name: "CodeQL"
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+  schedule:
+    - cron: '38 23 * * 0' # 每週日的 23:38 執行
+
+jobs:
+  analyze:
+    name: Analyze (${{ matrix.language }})
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        language: [ 'javascript', 'python' ] # 在這裡添加您需要的語言
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+
+    - name: Initialize CodeQL
+      uses: github/codeql-action/init@v3
+      with:
+        languages: ${{ matrix.language }}
+
+    - name: Perform CodeQL Analysis
+      uses: github/codeql-action/analyze@v3
+      with:
+        category: "/language:${{matrix.language}}"
+
+    - name: Notify via Telegram
+      run: curl -X POST -H "Content-Type: application/json" -d '{"chat_id": "${{ secrets.TELEGRAM_CHAT_ID }}", "text": "CodeQL analysis completed."}' https://api.telegram.org/bot${{ secrets.TELEGRAM_BOT_TOKEN }}/sendMessage
+    git pull origin main
+    git add .
+git commit -m "Add bot functionality"
+git push origin main
+from telegram import InlineKeyboardButton, InlineKeyboardMarkup, Update
+from telegram.ext import Updater, CommandHandler, CallbackQueryHandler
+
+def start(update: Update, context):
+    keyboard = [
+        [InlineKeyboardButton("選項 1", callback_data='1')],
+        [InlineKeyboardButton("選項 2", callback_data='2')],
+    ]
+    reply_markup = InlineKeyboardMarkup(keyboard)
+    update.message.reply_text('請選擇:', reply_markup=reply_markup)
+
+def button(update: Update, context):
+    query = update.callback_query
+    query.answer()
+    query.edit_message_text(text=f"選擇的選項: {query.data}")
+
+def main():
+    updater = Updater("YOUR_TELEGRAM_BOT_TOKEN", use_context=True)
+    dp = updater.dispatcher
+    dp.add_handler(CommandHandler("start", start))
+    dp.add_handler(CallbackQueryHandler(button))
+    updater.start_polling()
+    updater.idle()
+
+from telegram import Update, InlineKeyboardButton, InlineKeyboardMarkup, Bot
+from telegram.ext import Updater, CommandHandler, MessageHandler, Filters, CallbackContext
+import os
+def start(update: Update, context: CallbackContext) -> None:
+    keyboard = [
+TOKEN = os.getenv('TELEGRAM_BOT_TOKEN')
+CHAT_ID = os.getenv('YOUR_CHAT_ID')
+bot = Bot(token=TOKEN)
+def start(update: Update, context: CallbackContext) -> None:
+    keyboard = [
+    def start(update: Update, context: CallbackContext) -> None:
+    reply_markup = InlineKeyboardMarkup(keyboard)
+    update.message.reply_text('Hello!邀我入群賺紅利。', reply_markup=reply_markup)
+    
