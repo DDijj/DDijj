@@ -463,4 +463,40 @@ jobs:
         to: ${{ secrets.TELEGRAM_CHAT_ID }}
         token: ${{ secrets.TELEGRAM_BOT_TOKEN }}
         message: "CodeQL analysis completed."
-    
+    from telegram import Update
+from telegram.ext import Updater, CommandHandler, CallbackContext
+
+CHAT_ID = 'YOUR_CHAT_ID'
+
+def delete_messages(context: CallbackContext):
+    context.bot.delete_message(chat_id=CHAT_ID, message_id=context.job.context)
+
+def schedule_delete(update: Update, context: CallbackContext):
+    message_id = update.message.message_id
+    context.job_queue.run_once(delete_messages, 86400, context=message_id)
+    update.message.reply_text('Message scheduled for deletion in 24 hours.')
+
+def main():
+    updater = Updater("YOUR_TELEGRAM_BOT_TOKEN", use_context=True)
+    dp = updater.dispatcher
+    dp.add_handler(CommandHandler("schedule_delete", schedule_delete))
+    updater.start_polling()
+    updater.idle()
+
+if __name__ == '__main__':
+    main()
+    - name: Set up Python
+  uses: actions/setup-python@v3
+  with:
+    python-version: '3.x'
+
+- name: Install dependencies
+  run: |
+    python -m pip install --upgrade pip
+    pip install python-telegram-bot
+
+- name: Run Telegram bot
+  run: python telegram_bot.py
+  env:
+    TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+    YOUR_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
