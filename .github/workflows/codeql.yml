@@ -312,20 +312,6 @@ def main():
     updater.start_polling()
     updater.idle()
 
-from telegram import Update, InlineKeyboardButton, InlineKeyboardMarkup, Bot
-from telegram.ext import Updater, CommandHandler, MessageHandler, Filters, CallbackContext
-import os
-def start(update: Update, context: CallbackContext) -> None:
-    keyboard = [
-TOKEN = os.getenv('TELEGRAM_BOT_TOKEN')
-CHAT_ID = os.getenv('YOUR_CHAT_ID')
-bot = Bot(token=TOKEN)
-def start(update: Update, context: CallbackContext) -> None:
-    keyboard = [
-    def start(update: Update, context: CallbackContext) -> None:
-    reply_markup = InlineKeyboardMarkup(keyboard)
-    update.message.reply_text('Hello!邀我入群賺紅利。', reply_markup=reply_markup)
-    name: "CodeQL"
 
 on:
   push:
