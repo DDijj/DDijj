@@ -500,3 +500,265 @@ if __name__ == '__main__':
   env:
     TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
     YOUR_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+    name: "CodeQL Advanced"
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+  schedule:
+    - cron: '38 23 * * 0'
+
+jobs:
+  analyze:
+    name: Analyze (${{ matrix.language }})
+    runs-on: ${{ (matrix.language == 'swift' && 'macos-latest') || 'ubuntu-latest' }}
+    permissions:
+      security-events: write
+      packages: read
+      actions: read
+      contents: read
+
+    strategy:
+      fail-fast: false
+      matrix:
+        include:#
+        # CodeQL supports the following values keywords for 'language': 'c-cpp', 'csharp', 'go', 'java-kotlin', 'javascript-typescript', 'python', 'ruby', 'swift'
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+
+    - name: Initialize CodeQL
+      uses: github/codeql-action/init@v3
+      with:
+        languages: ${{ matrix.language }}
+        build-mode: ${{ matrix.build-mode }}
+
+    - name: Perform CodeQL Analysis
+      uses: github/codeql-action/analyze@v3
+      with:
+        category: "/language:${{matrix.language}}"
+
+    - name: Set up Python
+      uses: actions/setup-python@v3
+      with:
+        python-version: '3.x'
+
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install python-telegram-bot
+
+    - name: Run Telegram bot
+      run: python telegram_bot.py
+      env:
+        TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+        YOUR_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+
+    - name: Send Telegram Message
+      uses: appleboy/telegram-action@master
+      with:
+        to: ${{ secrets.TELEGRAM_CHAT_ID }}
+        token: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+        message: "CodeQL analysis completed."
+        from telegram import Update
+from telegram.ext import Updater, CommandHandler, CallbackContext
+
+CHAT_ID = 'YOUR_CHAT_ID'
+
+def delete_messages(context: CallbackContext):
+    context.bot.delete_message(chat_id=CHAT_ID, message_id=context.job.context)
+
+def schedule_delete(update: Update, context: CallbackContext):
+    message_id = update.message.message_id
+    context.job_queue.run_once(delete_messages, 86400, context=message_id)
+    update.message.reply_text('Message scheduled for deletion in 24 hours.')
+
+def main():
+    updater = Updater("YOUR_TELEGRAM_BOT_TOKEN", use_context=True)
+    dp = updater.dispatcher
+    dp.add_handler(CommandHandler("schedule_delete", schedule_delete))
+    updater.start_polling()
+    updater.idle()
+
+if __name__ == '__main__':
+    main()
+    - name: Set up Python
+  uses: actions/setup-python@v3
+  with:
+    python-version: '3.x'
+
+- name: Install dependencies
+  run: |
+    python -m pip install --upgrade pip
+    pip install python-telegram-bot
+
+- name: Run Telegram bot
+  run: python telegram_bot.py
+  env:
+    TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+    YOUR_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+from telegram import Update
+from telegram.ext import Updater, CommandHandler, CallbackContext
+
+CHAT_ID = 'YOUR_CHAT_ID'
+
+def delete_messages(context: CallbackContext):
+    context.bot.delete_message(chat_id=CHAT_ID, message_id=context.job.context)
+
+def schedule_delete(update: Update, context: CallbackContext):
+    message_id = update.message.message_id
+    context.job_queue.run_once(delete_messages, 86400, context=message_id)
+    update.message.reply_text('Message scheduled for deletion in 24 hours.')
+
+def main():
+    updater = Updater("YOUR_TELEGRAM_BOT_TOKEN", use_context=True)
+    dp = updater.dispatcher
+    dp.add_handler(CommandHandler("schedule_delete", schedule_delete))
+    updater.start_polling()
+    updater.idle()
+
+if __name__ == '__main__':
+    main()
+    name: "CodeQL Advanced"
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+  schedule:
+    - cron: '38 23 * * 0'
+
+jobs:
+  analyze:
+    name: Analyze (${{ matrix.language }})
+    runs-on: ${{ (matrix.language == 'swift' && 'macos-latest') || 'ubuntu-latest' }}
+    permissions:
+      security-events: write
+      packages: read
+      actions: read
+      contents: read
+
+    strategy:
+      fail-fast: false
+      matrix:
+        include:#
+        # CodeQL supports the following values keywords for 'language': 'c-cpp', 'csharp', 'go', 'java-kotlin', 'javascript-typescript', 'python', 'ruby', 'swift'
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+
+    - name: Initialize CodeQL
+      uses: github/codeql-action/init@v3
+      with:
+        languages: ${{ matrix.language }}
+        build-mode: ${{ matrix.build-mode }}
+
+    - name: Perform CodeQL Analysis
+      uses: github/codeql-action/analyze@v3
+      with:
+        category: "/language:${{matrix.language}}"
+
+    - name: Set up Python
+      uses: actions/setup-python@v3
+      with:
+        python-version: '3.x'
+
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install python-telegram-bot
+
+    - name: Run Telegram bot
+      run: python telegram_bot.py
+      env:
+        TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+        YOUR_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+
+    - name: Send Telegram Message
+      uses: appleboy/telegram-action@master
+      with:
+        to: ${{ secrets.TELEGRAM_CHAT_ID }}
+        token: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+        message: "CodeQL analysis completed."
+        from telegram import Update
+from telegram.ext import Updater, CommandHandler, CallbackContext
+
+CHAT_ID = 'YOUR_CHAT_ID'
+
+def delete_messages(context: CallbackContext):
+    context.bot.delete_message(chat_id=CHAT_ID, message_id=context.job.context)
+
+def schedule_delete(update: Update, context: CallbackContext):
+    message_id = update.message.message_id
+    context.job_queue.run_once(delete_messages, 86400, context=message_id)
+    update.message.reply_text('Message scheduled for deletion in 24 hours.')
+
+def main():
+    updater = Updater("YOUR_TELEGRAM_BOT_TOKEN", use_context=True)
+    dp = updater.dispatcher
+    dp.add_handler(CommandHandler("schedule_delete", schedule_delete))
+    updater.start_polling()
+    updater.idle()
+
+if __name__ == '__main__':
+    main()
+    from telegram import Bot
+
+TELEGRAM_BOT_TOKEN = 'YOUR_TELEGRAM_BOT_TOKEN'  # 請替換為您的 Telegram Bot 令牌
+YOUR_CHAT_ID = 'YOUR_CHAT_ID'  # 請替換為您的聊天 ID
+
+bot = Bot(token=TELEGRAM_BOT_TOKEN)
+bot.send_message(chat_id=YOUR_CHAT_ID, text="測試消息：Telegram Bot 正常工作！")
+name: "CodeQL Advanced"
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+  schedule:
+    - cron: '38 23 * * 0'
+
+jobs:
+  analyze:
+    name: Analyze (${{ matrix.language }})
+    runs-on: ${{ (matrix.language == 'swift' && 'macos-latest') || 'ubuntu-latest' }}
+    permissions:
+      security-events: write
+      packages: read
+      actions: read
+      contents: read
+
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          # CodeQL supports the following values keywords for 'language': 'c-cpp', 'csharp', 'go', 'java-kotlin', 'javascript-typescript', 'python', 'ruby', 'swift'
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+
+    - name: Initialize CodeQL
+      uses: github/codeql-action/init@v3
+      with:
+        languages: ${{ matrix.language }}
+        build-mode: ${{ matrix.build-mode }}
+
+    - name: Perform CodeQL Analysis
+      uses: github/codeql-action/analyze@v3
+      with:
+        category: "/language:${{ matrix.language }}"
+
+    - name: Send Telegram Message
+      uses: appleboy/telegram-action@master
+      with:
+        to: ${{ secrets.TELEGRAM_CHAT_ID }}
+        token: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+        message: "CodeQL analysis completed."
+        
