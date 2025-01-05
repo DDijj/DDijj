@@ -1,0 +1,2 @@
+rails generate model User email:string password_digest:string
+rake db:migrate
