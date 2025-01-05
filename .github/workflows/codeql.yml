@@ -87,15 +87,12 @@ jobs:
     - name: Perform CodeQL Analysis
       uses: github/codeql-action/analyze@v3
       with:
-        category: "/language:${{matrix.language}}"
-        - name: Send Telegram Message
+        category: "/language:${{matrix.language}}"  
   uses: appleboy/telegram-action@master
   with:
     to: ${{ secrets.TELEGRAM_CHAT_ID }}
     token: ${{ secrets.TELEGRAM_BOT_TOKEN }}
     message: "CodeQL analysis completed."
-    - name: Perform CodeQL Analysis
-  uses: github/codeql-action/analyze@v3
   with:
     category: "/language:${{matrix.language}}"
     token: ${{ secrets.MY_SECRET_TOKEN }}
