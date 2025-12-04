@@ -1,10 +1,10 @@
-# Hi, I’m @DDijj 👋
+      # License plate | Travel photo | Driver's license |
 
-## About Me
-- 👀 I’m interested in ...
+## Major_Car
+- 👀 ✅Factory 1:1 reproduction of AB license plate, driving license, driver's license ✅ Customerization More VIP information  👉Jin Pangpang Professional Professional Customerization👈
 - 🌱 I’m currently learning ...
 - 💞️ I’m looking to collaborate on ...
-- 📫 How to reach me: ...
+- 📫 How to reach me:    - [Telegram link](httphttps://t.me/Car_plate1_Bot)
 - 😄 Pronouns: ...
 - ⚡ Fun fact: ...
 
@@ -12,7 +12,7 @@
 Here are some of the projects I’ve been working on:
 
 1. **Pilihaaliqtuq** - Tadja ayuirhaqtuq qanuqtut piliuriami telegram-mik
-   - [Telegram link](https://T.me/ddojjc13)
+   - [Telegram link](httphttps://t.me/Car_plate1_Bot)
 
 2. **Apiqhuutit** - Pimanga titiraqhimayumik atuqhunga titiraqhimayumik, numiktiqhimayuq uvani Chinesemi, piqaqtuq ihuangitumik ilituqhaidjutinik, uvalu qanuq niuvigiangani pilaagutit atugiangani maligaq,
    - [Telegram Link](https://T.me/ddojjc13)
@@ -29,26 +29,3 @@ Feel free to reach out to me via [email@example.com](mailto:sky088950403@gmail.c
 DDijj/DDijj is a ✨ special ✨ repository because its `README.md` (this file) appears on your GitHub profile.
 You can click the Preview link to take a look at your changes.
 -->
-# 船長目錄
-
-- [單線留言](#) 顯示(明確告知來意) 24小時內回覆
-- 教學ustd申辦流程加綁定提款帳戶
-  - [ustd連結](#)
-  - [登記錢包資訊](#)
-- [群組查詢](#)
-
-- [客製化商品](#)
-- [廣告託管](#)
-- [usdt平台](#)
-- [24h待命線](#)
-
-- "邀我入群賺紅利" [客製化商品](#)
-  - [跳出目錄](#)
-  - [24小定時播報](#)
-  - [廣告紅利50%](#)
-  - [引流;過濾;](#)
-  - [各個群組連結](#)
-
-- <流行音樂>(鍵盤){連結音樂網}
-- 雙線聯繫
-- [客服](#)
